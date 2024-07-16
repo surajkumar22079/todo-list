@@ -6,6 +6,6 @@ import { createAccessToken } from "../controllers/login-controllers.js";
 
 
 //Sign In
-router.post("/signin", createAccessToken );
+router.post("/access-tokens", createAccessToken );
 
 export default router;

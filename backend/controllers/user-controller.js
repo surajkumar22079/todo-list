@@ -33,8 +33,7 @@ export const createAccount = async (req, res) => {
     );
       return res.status(201).json({user, accessToken ,  message: "User Signed up Successfully" })
      
-  } catch (error) {
-    console.log(error);
+  } catch (error) { 
     res.status(500).json({ message: "Internal server error" });
   }
 };

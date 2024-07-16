@@ -20,8 +20,7 @@ export const addTodo = async (req, res) => {
       existingUser.todo.push(todo);
       existingUser.save();
     }
-  } catch (error) {
-    console.log(error);
+  } catch (error) { 
     res.send(400).json({ message: "Error in sending task data" });
   }
 };
@@ -47,15 +46,13 @@ export const deleteTodo = async (req, res) => {
 
     const taskToBeDeleted = await Todo.findOneAndDelete({
       _id: todoId,
-    }).then(() => {
-      res.json({message:"Task deleted successfully"});
     });
 
-    const userToBeUpdated = await User.findByIdAndUpdate(user._id, {
+    const userToBeUpdated = await User.findByIdAndUpdate(user.id, {
       $pull: {
         todo: todoId,
       },
-    }).then(()=>res.json({message:"User updated successfully"}));
+    }).then(()=>res.json({message:"Task deleted successfully"}));
   } catch (error) {
     res.status(500);
   }
@@ -74,9 +71,8 @@ export const updateTask = async (req, res) => {
       isCompleted,
     });
     todo.save().then(() => res.status(200).json({ message: "Task updated" }));
-  } catch (error) {
-    console.log(error);
-    // res.send(400).json({ message: "Error in sending task data" });
+  } catch (error) { 
+    res.send(500).json({ message: "Server error" });
   }
 };
 
@@ -85,11 +81,35 @@ export const getTasks = async (req, res) => {
   try {
     const todo = await Todo.find({ userId: req.params.id });
     if (todo.length !== 0) {
-      res.status(200).json({ todo: todo });
+     return res.status(200).json({ todo: todo });
     } else {
-      res.status(404).json({ message: "No Task Found" });
+     return res.status(404).json({ message: "No Task Found" });
     }
   } catch (error) {
-    res.status(500);
+   return res.status(500);
+  }
+};
+
+
+//toggle Completed or not
+export const toggleCompleteStatus = async (req, res) => {
+  try { 
+    const todoId = req.params.id;
+
+    // Find the todo to get the current isCompleted state
+    const todo = await Todo.findById(todoId);
+    if (!todo) {
+      return res.status(404).json({ message: "No task found" });
+    }
+
+    // Toggle the isCompleted state
+    todo.isCompleted = !todo.isCompleted;
+
+    // Save the updated todo
+    await todo.save();
+
+    return res.status(200).json({ message: "Task updated successfully", todo });
+  } catch (error) { 
+    return res.status(500).json({ message: "Error updating task" });
   }
 };

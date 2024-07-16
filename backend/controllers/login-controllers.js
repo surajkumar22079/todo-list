@@ -28,8 +28,7 @@ export const createAccessToken = async (req, res) => {
     );
 
     res.status(200).json({ others, accessToken , message:"Login Successful" });
-  } catch (error) {
-    console.log(error);
+  } catch (error) { 
     res.status(500).json({ message: "Internal Server Error" });
   }
 };

@@ -1,19 +1,22 @@
 import express from "express";
-import { addTodo, deleteTodo, updateTask, getTasks } from "../controllers/todo-controller.js";
+import { addTodo, deleteTodo, updateTask, getTasks, toggleCompleteStatus } from "../controllers/todo-controller.js";
 import {ensureAccess} from '../middlewares/account-auth.js';
 
 
 const router = express.Router(); 
 //create Task
-router.post("/addTask",ensureAccess, addTodo);
+router.post("/todo",ensureAccess, addTodo);
 
 //Update Task
-router.put("/updateTask/:id",ensureAccess, updateTask );
+router.put("/todo/:id",ensureAccess, updateTask );
 
 //Delete Task
-router.delete("/deleteTask/:id",ensureAccess, deleteTodo);
+router.delete("/todo/:id",ensureAccess, deleteTodo);
 
 //getTask
-router.get("/getTask/:id",ensureAccess, getTasks);
+router.get("/todo/:id",ensureAccess, getTasks);
+
+//toggleCompleted
+router.patch("/todo/:id" ,ensureAccess, toggleCompleteStatus);
 
 export default router;
