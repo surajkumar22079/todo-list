@@ -1,6 +1,5 @@
 import User from "../models/user.js";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs"; 
 
 //API to create account
 export const createAccount = async (req, res) => {
@@ -22,16 +21,17 @@ export const createAccount = async (req, res) => {
     });
     await user.save();
     
-    const accessToken = jwt.sign(
-      {
-        user: user,
-      },
-      `${process.env.ACCESS_TOKEN_SECRET}`,
-      {
-        expiresIn: "3600m",
-      }
-    );
-      return res.status(201).json({user, accessToken ,  message: "User Signed up Successfully" })
+    // const accessToken = jwt.sign(
+    //   {
+    //     user: user,
+    //   },
+    //   `${process.env.ACCESS_TOKEN_SECRET}`,
+    //   {
+    //     expiresIn: "3600m",
+    //   }
+    // );
+      // return res.status(201).json({user, accessToken ,  message: "User Signed up Successfully" })
+      return res.status(201).json({user ,  message: "User Signed up Successfully" })
      
   } catch (error) { 
     res.status(500).json({ message: "Internal server error" });

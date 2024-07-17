@@ -14,8 +14,7 @@ const listSchema = new Schema(
       index: true,
     },
     type:{
-        type: String,
-        required: true,
+        type: String, 
         enum: ["Official", "Personal", "Hobby"],
         default: "Official"
     },

@@ -21,29 +21,26 @@ export const addTodo = async (req, res) => {
       existingUser.save();
     }
   } catch (error) { 
-    res.send(400).json({ message: "Error in sending task data" });
+    console.log(error);
+    res.status(400).json({ message: "Error in sending task data" });
   }
 };
 
 //delete Task
 export const deleteTodo = async (req, res) => {
   const todoId = req.params.id;
-  const user = req.body;
+  const user = req.body; 
   try {
     const todo = await Todo.findOne({
       _id: todoId,
-    });
+    }); 
     const userDB = await User.findOne({
       _id: user.id,
     });
 
     if (!todo) {
       return res.status(401).json({ message: "No task found" });
-    }
-    if (!userDB) {
-      return res.status(401).json({ message: "no user found" });
-    }
-
+    } 
     const taskToBeDeleted = await Todo.findOneAndDelete({
       _id: todoId,
     });
@@ -72,14 +69,14 @@ export const updateTask = async (req, res) => {
     });
     todo.save().then(() => res.status(200).json({ message: "Task updated" }));
   } catch (error) { 
-    res.send(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error" });
   }
 };
 
 //getTasks
 export const getTasks = async (req, res) => {
   try {
-    const todo = await Todo.find({ userId: req.params.id });
+    const todo = await Todo.find({ userId: req.params.id }); 
     if (todo.length !== 0) {
      return res.status(200).json({ todo: todo });
     } else {
@@ -94,8 +91,8 @@ export const getTasks = async (req, res) => {
 //toggle Completed or not
 export const toggleCompleteStatus = async (req, res) => {
   try { 
+    
     const todoId = req.params.id;
-
     // Find the todo to get the current isCompleted state
     const todo = await Todo.findById(todoId);
     if (!todo) {

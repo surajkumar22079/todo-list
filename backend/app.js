@@ -19,9 +19,9 @@ app.get("/" , (req,res) => {
 
 
 app.use("/api/users",createUserRoutes);
-app.use("/api/todos",todoRoutes);
 app.use("/api" , loginRoutes);
+app.use("/api/todos",todoRoutes);
 
-app.listen(1000, ()=> {
+app.listen(8000, ()=> {
     console.log("Server started")
 });
