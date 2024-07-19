@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();  
-import { createAccessToken } from "../controllers/login-controllers.js";
+import { createAccessToken } from "../controllers/access-token-controllers.js";
 
 
 

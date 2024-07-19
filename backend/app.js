@@ -6,7 +6,7 @@ import "./connectDB/connectDB.js";
 // import auth from "./routes/auth-routes.js";
 import todoRoutes from "./routes/todo-routes.js";
 import createUserRoutes from "./routes/user-routes.js";
-import loginRoutes from "./routes/login-routes.js";
+import loginRoutes from "./routes/access-token-routes.js";
 
 
 dotenv.config();

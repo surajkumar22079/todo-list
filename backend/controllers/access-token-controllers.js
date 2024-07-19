@@ -1,4 +1,4 @@
-import User from "../models/user.js";
+import User from "../models/user-db.js";
 import bcrypt from "bcryptjs";
 
 import jwt from "jsonwebtoken";
@@ -7,14 +7,14 @@ export const createAccessToken = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      res.status(400).json({ message: "Please SignUp first" });
+      res.status(400).json(user);
     } 
     const isPasswordCorrect = bcrypt.compareSync(
       req.body.password,
-      user.password
+      user.hashedPassword
     );
     if (!isPasswordCorrect) {
-      res.status(400).json({ message: "Invalid Credentials" });
+      res.status(400).json();
     }
 
     const { password, ...others } = user._doc;
@@ -27,8 +27,8 @@ export const createAccessToken = async (req, res) => {
       }
     );
 
-    res.status(200).json({ others, accessToken , message:"Login Successful" });
+    res.status(200).json({ others, accessToken });
   } catch (error) { 
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500);
   }
 };

@@ -35,7 +35,7 @@ const Signup = () => {
           "http://localhost:8000/api/users/accounts",
           Inputs
         );
-        if (response.data.message === "User Already Registered") {
+        if (response.status === 409) {
           toast.error("User Already Registered");
         } else {
           toast.success("User signed up successfully");
@@ -49,8 +49,7 @@ const Signup = () => {
         }
       }
     } catch (error) {
-      console.error("Error during signup:", error);
-      toast.error("An error occurred. Please try again.");
+      toast.error("User already registered!");
     }
   };
 

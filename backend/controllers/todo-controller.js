@@ -1,5 +1,5 @@
-import Todo from "../models/todo-list.js";
-import User from "../models/user.js";
+import Todo from "../models/todo-db.js";
+import User from "../models/user-db.js";
 
 //add Task
 export const addTodo = async (req, res) => {
@@ -22,7 +22,7 @@ export const addTodo = async (req, res) => {
     }
   } catch (error) { 
     console.log(error);
-    res.status(400).json({ message: "Error in sending task data" });
+    res.status(400).json(error);
   }
 };
 
@@ -39,7 +39,7 @@ export const deleteTodo = async (req, res) => {
     });
 
     if (!todo) {
-      return res.status(401).json({ message: "No task found" });
+      return res.status(404).json({});
     } 
     const taskToBeDeleted = await Todo.findOneAndDelete({
       _id: todoId,
@@ -49,9 +49,9 @@ export const deleteTodo = async (req, res) => {
       $pull: {
         todo: todoId,
       },
-    }).then(()=>res.json({message:"Task deleted successfully"}));
+    }).then(()=>res.json());
   } catch (error) {
-    res.status(500);
+    res.status(500).json({error});
   }
 };
 
@@ -67,9 +67,9 @@ export const updateTask = async (req, res) => {
       type,
       isCompleted,
     });
-    todo.save().then(() => res.status(200).json({ message: "Task updated" }));
+    todo.save().then(() => res.status(200).json(todo));
   } catch (error) { 
-    res.status(500).json({ message: "Server error" });
+    res.status(500);
   }
 };
 
@@ -80,7 +80,7 @@ export const getTasks = async (req, res) => {
     if (todo.length !== 0) {
      return res.status(200).json({ todo: todo });
     } else {
-     return res.status(200).json({ message: "No Task Found" });
+     return res.status(200).json({});
     }
   } catch (error) {
    return res.status(500);
@@ -96,7 +96,7 @@ export const toggleCompleteStatus = async (req, res) => {
     // Find the todo to get the current isCompleted state
     const todo = await Todo.findById(todoId);
     if (!todo) {
-      return res.status(404).json({ message: "No task found" });
+      return res.status(404).json({});
     }
 
     // Toggle the isCompleted state
@@ -105,8 +105,8 @@ export const toggleCompleteStatus = async (req, res) => {
     // Save the updated todo
     await todo.save();
 
-    return res.status(200).json({ message: "Task updated successfully", todo });
+    return res.status(200).json({ todo });
   } catch (error) { 
-    return res.status(500).json({ message: "Error updating task" });
+    return res.status(500);
   }
 };
