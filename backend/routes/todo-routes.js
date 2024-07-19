@@ -5,18 +5,18 @@ import {ensureAccess} from '../middlewares/account-auth.js';
 
 const router = express.Router(); 
 //create Task
-router.post("/todo",ensureAccess, addTodo);
+router.post("/",ensureAccess, addTodo);
 
 //Update Task
-router.put("/todo/:id",ensureAccess, updateTask );
+router.put("/:id",ensureAccess, updateTask );
 
 //Delete Task
-router.delete("/todo/:id",ensureAccess, deleteTodo);
+router.delete("/:id",ensureAccess, deleteTodo);
 
 //getTask
-router.get("/todo/:id",ensureAccess, getTasks);
+router.get("/:id",ensureAccess, getTasks);
 
 //toggleCompleted
-router.patch("/todo/:id" ,ensureAccess, toggleCompleteStatus);
+router.patch("/:id" ,ensureAccess, toggleCompleteStatus);
 
 export default router;

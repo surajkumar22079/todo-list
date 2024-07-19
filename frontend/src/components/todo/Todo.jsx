@@ -59,7 +59,7 @@ const Todo = () => {
         };
         await axios
           .post(
-            "http://localhost:8000/api/todos/todo",
+            "http://localhost:8000/api/todos",
             {
               title: Inputs.title,
               description: Inputs.description,
@@ -106,7 +106,7 @@ const Todo = () => {
 
     try {
       await axios.delete(
-        `http://localhost:8000/api/todos/todo/${Cardid}`,
+        `http://localhost:8000/api/todos/${Cardid}`,
         config
       );
       toast.success("Your task has been deleted successfully!");
@@ -138,7 +138,7 @@ const Todo = () => {
         headers: { Authorization: `Bearer ${token}` },
       };
       await axios
-        .get(`http://localhost:8000/api/todos/todo/${id}`, config)
+        .get(`http://localhost:8000/api/todos/${id}`, config)
         .then((response) => {
           if(response.data.todo)
           {setArray(response.data.todo);}

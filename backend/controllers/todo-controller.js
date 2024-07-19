@@ -80,7 +80,7 @@ export const getTasks = async (req, res) => {
     if (todo.length !== 0) {
      return res.status(200).json({ todo: todo });
     } else {
-     return res.status(404).json({ message: "No Task Found" });
+     return res.status(200).json({ message: "No Task Found" });
     }
   } catch (error) {
    return res.status(500);

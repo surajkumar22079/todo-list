@@ -27,7 +27,7 @@ const TodoCards = ({
 
       try {
         const response = await axios.patch(
-          `http://localhost:8000/api/todos/todo/${cardId}`,
+          `http://localhost:8000/api/todos/${cardId}`,
           { isCompleted: !isCompleted },
           config
         );

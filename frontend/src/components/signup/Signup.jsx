@@ -32,7 +32,7 @@ const Signup = () => {
         toast.error("Please fill all the fields");
       } else {
         const response = await axios.post(
-          "http://localhost:8000/api/users/register",
+          "http://localhost:8000/api/users/accounts",
           Inputs
         );
         if (response.data.message === "User Already Registered") {
